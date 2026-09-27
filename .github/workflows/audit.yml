@@ -1,6 +1,7 @@
 name: Dependency audit
 
 on:
+  # Runs only when Deploy calls it, after the main-branch scan has succeeded.
   workflow_call:
 
 jobs:

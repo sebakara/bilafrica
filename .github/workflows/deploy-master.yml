@@ -2,10 +2,11 @@ name: Deploy
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
-  # Scan first. A later job runs only when the job it needs has succeeded.
+  # All three run on main. Audit starts after scan succeeds.
+  # Deploy starts after audit succeeds.
   scan:
     uses: ./.github/workflows/security-malware-scan.yml
 
