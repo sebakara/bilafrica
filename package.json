@@ -1,0 +1,15 @@
+{
+  "name": "bil",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --parallel --filter @bil/api --filter @bil/web dev",
+    "build": "pnpm --filter @bil/api build && pnpm --filter @bil/web build",
+    "typecheck": "pnpm --filter @bil/api exec tsc --noEmit && pnpm --filter @bil/web typecheck",
+    "test": "pnpm --filter @bil/web test"
+  },
+  "packageManager": "pnpm@10.15.0",
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  }
+}
