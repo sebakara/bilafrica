@@ -1,6 +1,9 @@
 import Image from "@/components/ui/Image";
+import { useSite } from "@/components/site/SiteContent";
 
 export function LoadingMark() {
+  const { chrome } = useSite();
+
   return (
     <div className="flex flex-col items-center justify-center gap-4" role="status" aria-live="polite">
       <Image
@@ -11,7 +14,7 @@ export function LoadingMark() {
         priority
         className="loading-mark h-16 w-auto"
       />
-      <p className="text-sm font-semibold tracking-[0.16em] text-muted uppercase">Loading</p>
+      <p className="text-sm font-semibold tracking-[0.16em] text-muted uppercase">{chrome.routeLoading}</p>
     </div>
   );
 }

@@ -34,6 +34,8 @@ services:
       CONTACT_EMAIL: ${CONTACT_EMAIL:-}
       CONTACT_FROM_EMAIL: ${CONTACT_FROM_EMAIL:-}
       RESEND_API_KEY: ${RESEND_API_KEY:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:-}
     depends_on:
       mysql:
         condition: service_healthy

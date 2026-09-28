@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { interestAreas, isListedInterest } from "@bil/shared";
 import { contactSchema } from "@/lib/contact-schema";
 
 const valid = {
@@ -33,7 +34,8 @@ describe("contact validation", () => {
   });
 
   it("rejects an unknown area of interest", () => {
-    const parsed = contactSchema.safeParse({ ...valid, interest: "Cryptocurrency trading" });
-    expect(parsed.success).toBe(false);
+    expect(isListedInterest("Cryptocurrency trading", interestAreas)).toBe(false);
+    expect(isListedInterest("Technology Development", interestAreas)).toBe(true);
+    expect(contactSchema.safeParse({ ...valid, interest: "" }).success).toBe(false);
   });
 });

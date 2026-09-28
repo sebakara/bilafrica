@@ -3,7 +3,7 @@ import { ServiceCard } from "@/components/ui/ServiceCard";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
-import { capabilities } from "@/data/home";
+import { useSite } from "@/components/site/SiteContent";
 
 const icons = {
   technology: Cpu,
@@ -15,20 +15,23 @@ const icons = {
 } as const;
 
 export function Capabilities() {
+  const { home, chrome } = useSite();
+  const band = chrome.bands.capabilities;
+
   return (
     <Section tone="canvas">
       <SectionHeader
-        eyebrow="What we do"
-        title="Capabilities that reinforce each other."
-        description="Commercial technology development sits at the centre. Research, advisory and ecosystem work make that delivery more precise."
+        eyebrow={band.eyebrow}
+        title={band.title}
+        description={band.description}
         action={
           <Button href="/services" variant="outline">
-            Explore Our Capabilities
+            {band.action}
           </Button>
         }
       />
       <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {capabilities.map((capability) => (
+        {home.capabilities.map((capability) => (
           <ServiceCard
             key={capability.href}
             href={capability.href}

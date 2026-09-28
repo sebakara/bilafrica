@@ -1,5 +1,3 @@
-import { siteConfig } from "@/lib/site";
-
 type PageMetadataInput = {
   title: string;
   description: string;
@@ -21,7 +19,6 @@ export function pageMetadata({
       title,
       description,
       url: path,
-      siteName: siteConfig.name,
       type: "website",
       locale: "en_US",
     },

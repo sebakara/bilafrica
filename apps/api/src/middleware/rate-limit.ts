@@ -2,7 +2,7 @@ const buckets = new Map<string, { count: number; resetAt: number }>();
 
 /**
  * In-memory limit for a single server instance.
- * TODO: replace with a shared store before running more than one instance.
+ * Replace with a shared store before running more than one instance.
  */
 export function allowRequest(key: string, limit = 5, windowMs = 10 * 60 * 1000) {
   const now = Date.now();
@@ -19,4 +19,9 @@ export function allowRequest(key: string, limit = 5, windowMs = 10 * 60 * 1000) 
 
   current.count += 1;
   return true;
+}
+
+export function clientAddress(request: Request) {
+  const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  return forwarded || request.headers.get("x-real-ip") || "local";
 }

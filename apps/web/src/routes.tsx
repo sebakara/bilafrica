@@ -19,8 +19,34 @@ import ContactPage from "@/app/contact/page";
 import PrivacyPage from "@/app/privacy/page";
 import TermsPage from "@/app/terms/page";
 import NotFound from "@/app/not-found";
+import AdminLoginPage from "@/app/admin/login/page";
+import AdminHomePage from "@/app/admin/page";
+import AdminContentPage from "@/app/admin/content/page";
+import AdminInsightsPage from "@/app/admin/insights/page";
+import AdminInsightEditPage from "@/app/admin/insights/edit/page";
+import AdminContactsPage from "@/app/admin/contacts/page";
+import AdminContactPage from "@/app/admin/contacts/detail/page";
+import AdminSubscribersPage from "@/app/admin/subscribers/page";
+import { AdminShell } from "@/components/admin/AdminShell";
 
 export const router = createBrowserRouter([
+  {
+    path: "/admin/login",
+    element: <AdminLoginPage />,
+  },
+  {
+    path: "/admin",
+    element: <AdminShell />,
+    children: [
+      { index: true, element: <AdminHomePage /> },
+      { path: "content", element: <AdminContentPage /> },
+      { path: "insights", element: <AdminInsightsPage /> },
+      { path: "insights/:id", element: <AdminInsightEditPage /> },
+      { path: "contacts", element: <AdminContactsPage /> },
+      { path: "contacts/:id", element: <AdminContactPage /> },
+      { path: "subscribers", element: <AdminSubscribersPage /> },
+    ],
+  },
   {
     path: "/",
     element: <AppShell />,

@@ -1,15 +1,18 @@
 import { PracticeBand } from "@/components/home/PracticeBand";
-import { advisoryHighlights } from "@/data/home";
+import { useSite } from "@/components/site/SiteContent";
 
 export function AdvisoryBand() {
+  const { home, chrome } = useSite();
+  const band = chrome.bands.advisory;
+
   return (
     <PracticeBand
-      eyebrow="Advisory"
-      title="Technology decisions backed by engineering and evidence."
-      description="Advisory at BIL is informed by people who also design, build and research systems. A recommendation is checked against what can actually be engineered and operated."
-      actionHref="/services/advisory"
-      actionLabel="Explore Advisory"
-      items={advisoryHighlights.map((item) => item.title)}
+      eyebrow={band.eyebrow}
+      title={band.title}
+      description={band.description}
+      actionHref={band.actionHref}
+      actionLabel={band.actionLabel}
+      items={home.advisoryHighlights.map((item) => item.title)}
     />
   );
 }

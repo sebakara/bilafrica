@@ -9,12 +9,15 @@ import { MegaMenu } from "@/components/layout/MegaMenu";
 import { MobileNavigation } from "@/components/layout/MobileNavigation";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { researchMenu, whatWeDoMenu } from "@/data/navigation";
+import { useSite } from "@/components/site/SiteContent";
 import { cn } from "@/lib/utils";
 
 type DesktopMenu = "work" | "research" | null;
 
 export function Header() {
+  const { navigation, chrome, site } = useSite();
+  const { whatWeDoMenu, researchMenu } = navigation;
+  const labels = chrome.header;
   const pathname = usePathname();
   const [menu, setMenu] = useState<DesktopMenu>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -54,10 +57,10 @@ export function Header() {
       onMouseLeave={() => setMenu(null)}
     >
       <Container className="flex h-16 items-center justify-between gap-4 lg:h-[4.5rem]">
-        <Logo variant="mark" priority />
-        <nav aria-label="Primary" className="hidden items-center lg:flex">
+        <Logo variant="mark" priority name={site.name} />
+        <nav aria-label={labels.primaryNav} className="hidden items-center lg:flex">
           <Link href="/" className={cn(itemClass, pathname === "/" && "text-brand")} aria-current={pathname === "/" ? "page" : undefined}>
-            Home
+            {labels.home}
           </Link>
           <div className="relative" onMouseEnter={() => setMenu("work")}>
             <button
@@ -68,7 +71,7 @@ export function Header() {
               aria-controls={workId}
               onClick={() => setMenu((current) => (current === "work" ? null : "work"))}
             >
-              What We Do
+              {labels.work}
               <ChevronDown className="size-4" aria-hidden="true" />
             </button>
           </div>
@@ -81,7 +84,7 @@ export function Header() {
               aria-controls={researchId}
               onClick={() => setMenu((current) => (current === "research" ? null : "research"))}
             >
-              Research & Labs
+              {labels.research}
               <ChevronDown className="size-4" aria-hidden="true" />
             </button>
             {menu === "research" ? (
@@ -100,25 +103,25 @@ export function Header() {
             ) : null}
           </div>
           <Link href="/industries" className={cn(itemClass, pathname.startsWith("/industries") && "text-brand")}>
-            Industries
+            {labels.industries}
           </Link>
           <Link href="/insights" className={cn(itemClass, pathname.startsWith("/insights") && "text-brand")}>
-            Insights
+            {labels.insights}
           </Link>
           <Link href="/about" className={cn(itemClass, pathname.startsWith("/about") && "text-brand")}>
-            About
+            {labels.about}
           </Link>
         </nav>
         <div className="flex items-center gap-2">
           <Button href="/contact" size="sm" className="hidden sm:inline-flex">
-            Talk to BIL
+            {labels.contact}
           </Button>
           <button
             type="button"
             className="inline-flex size-11 items-center justify-center rounded-md border border-line lg:hidden"
             aria-expanded={mobileOpen}
             aria-controls={mobileId}
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-label={mobileOpen ? labels.closeMenu : labels.openMenu}
             onClick={() => {
               setMobileOpen((open) => !open);
               setMenu(null);

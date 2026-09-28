@@ -5,10 +5,12 @@
   "scripts": {
     "dev": "next dev --port 3001",
     "build": "next build",
-    "start": "next start --port 3001"
+    "start": "next start --port 3001",
+    "db:migrate": "knex migrate:latest --knexfile knexfile.cjs"
   },
   "dependencies": {
     "@bil/shared": "workspace:*",
+    "knex": "^3.3.0",
     "mysql2": "^3.15.3",
     "next": "16.3.6",
     "react": "19.2.8",

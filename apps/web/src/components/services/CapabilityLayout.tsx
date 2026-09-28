@@ -1,5 +1,6 @@
 import { PageHero } from "@/components/sections/PageHero";
 import { CTASection } from "@/components/sections/CTASection";
+import { useSite } from "@/components/site/SiteContent";
 
 type CapabilityLayoutProps = {
   eyebrow: string;
@@ -23,14 +24,15 @@ export function CapabilityLayout({
   actions,
   ctaTitle,
   ctaDescription,
-  ctaLabel = "Discuss a Project",
+  ctaLabel,
   children,
 }: CapabilityLayoutProps) {
+  const { chrome } = useSite();
   return (
     <>
       <PageHero eyebrow={eyebrow} title={title} description={description} tone={tone} breadcrumbs={breadcrumbs} actions={actions} />
       {children}
-      <CTASection title={ctaTitle} description={ctaDescription} primaryLabel={ctaLabel} />
+      <CTASection title={ctaTitle} description={ctaDescription} primaryLabel={ctaLabel ?? chrome.capabilityCta} />
     </>
   );
 }

@@ -63,6 +63,7 @@ pnpm build
 | `CONTACT_EMAIL` | Inbox that receives enquiries |
 | `CONTACT_FROM_EMAIL` | Verified sender passed to Resend |
 | `RESEND_API_KEY` | Server-only Resend API key |
+| `ADMIN_SESSION_SECRET` | Secret used to sign the admin session cookie |
 
 If email variables are missing in development, validated submissions are written to the server log. In production, the form reports that delivery is not configured. Do not commit `.env.local`.
 
@@ -70,7 +71,7 @@ If email variables are missing in development, validated submissions are written
 
 ```text
 apps/web           React frontend
-apps/api           Next.js API
+apps/api           Next.js API. Routes delegate to controllers. Models query MySQL through Knex.
 packages/shared    Insight records, content types and form validation
 ```
 

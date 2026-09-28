@@ -15,6 +15,10 @@ export const interestAreas = [
 
 export type InterestArea = (typeof interestAreas)[number];
 
+export function isListedInterest(value: string, areas: readonly string[]) {
+  return areas.includes(value);
+}
+
 export const contactSchema = z.object({
   fullName: z
     .string()
@@ -29,7 +33,7 @@ export const contactSchema = z.object({
   email: z.email("Enter a valid email address."),
   phone: z.string().trim().max(40, "Phone number is too long.").optional(),
   country: z.string().trim().max(80, "Country is too long.").optional(),
-  interest: z.enum(interestAreas, "Select an area of interest."),
+  interest: z.string().trim().min(1, "Select an area of interest.").max(80, "Area of interest is too long."),
   message: z
     .string()
     .trim()

@@ -1,10 +1,16 @@
 import { render, screen } from "@testing-library/react";
+import { siteDocument } from "@bil/shared";
 import { describe, expect, it } from "vitest";
 import { Hero } from "@/components/home/Hero";
+import { SiteContentProvider } from "@/components/site/SiteContent";
 
 describe("homepage hero", () => {
   it("explains who BIL is and how to continue", () => {
-    render(<Hero />);
+    render(
+      <SiteContentProvider initial={siteDocument}>
+        <Hero />
+      </SiteContentProvider>,
+    );
 
     expect(
       screen.getByRole("heading", { level: 1, name: "Blockchain & Innovation Landscape" }),

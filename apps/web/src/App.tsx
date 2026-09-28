@@ -3,12 +3,15 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { RouteLoading } from "@/components/layout/RouteLoading";
 import { OrganizationJsonLd } from "@/components/seo/OrganizationJsonLd";
+import { SiteContentProvider, useSite } from "@/components/site/SiteContent";
 
-export function AppShell() {
+function PublicShell() {
+  const { chrome } = useSite();
+
   return (
     <>
       <a className="skip-link" href="#main">
-        Skip to content
+        {chrome.skip}
       </a>
       <Header />
       <RouteLoading />
@@ -18,5 +21,13 @@ export function AppShell() {
       <Footer />
       <OrganizationJsonLd />
     </>
+  );
+}
+
+export function AppShell() {
+  return (
+    <SiteContentProvider>
+      <PublicShell />
+    </SiteContentProvider>
   );
 }

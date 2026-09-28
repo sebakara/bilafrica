@@ -10,15 +10,6 @@ import { Principles } from "@/components/home/Principles";
 import { ResearchBand } from "@/components/home/ResearchBand";
 import { TechnologyBand } from "@/components/home/TechnologyBand";
 import { CTASection } from "@/components/sections/CTASection";
-import { pageMetadata } from "@/lib/seo";
-import { siteConfig } from "@/lib/site";
-
-export const metadata = pageMetadata({
-  title: "Blockchain & Innovation Landscape | Technology, Research & Innovation",
-  description: siteConfig.description,
-  path: "/",
-  absolute: true,
-});
 
 export default function HomePage() {
   return (

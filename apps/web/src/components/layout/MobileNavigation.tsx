@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Link from "@/components/ui/AppLink";
 import { ChevronDown } from "lucide-react";
-import type { NavGroup, NavLink } from "@/data/navigation";
+import type { NavGroup, NavLink } from "@bil/shared";
+import { useSite } from "@/components/site/SiteContent";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 
@@ -49,16 +50,18 @@ function ItemLink({ href, children, onNavigate }: { href: string; children: Reac
 }
 
 export function MobileNavigation({ id, pathname, whatWeDo, research, onNavigate }: MobileNavigationProps) {
+  const { chrome } = useSite();
+  const labels = chrome.header;
   const linkClass = (href: string) =>
     cn("block border-b border-line py-3 text-base font-medium", pathname === href && "text-brand");
 
   return (
-    <nav id={id} aria-label="Mobile" className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line bg-paper lg:hidden">
+    <nav id={id} aria-label={labels.mobileNav} className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line bg-paper lg:hidden">
       <div className="px-5 pb-6">
         <Link href="/" className={linkClass("/")} onClick={onNavigate}>
-          Home
+          {labels.home}
         </Link>
-        <Group label="What We Do">
+        <Group label={labels.work}>
           {whatWeDo.map((group) => (
             <div key={group.label}>
               <p className="text-xs font-semibold text-brand">{group.label}</p>
@@ -74,7 +77,7 @@ export function MobileNavigation({ id, pathname, whatWeDo, research, onNavigate 
             </div>
           ))}
         </Group>
-        <Group label="Research & Labs">
+        <Group label={labels.research}>
           <ul>
             {research.map((item) => (
               <li key={item.href}>
@@ -86,20 +89,20 @@ export function MobileNavigation({ id, pathname, whatWeDo, research, onNavigate 
           </ul>
         </Group>
         <Link href="/industries" className={linkClass("/industries")} onClick={onNavigate}>
-          Industries
+          {labels.industries}
         </Link>
         <Link href="/insights" className={linkClass("/insights")} onClick={onNavigate}>
-          Insights
+          {labels.insights}
         </Link>
         <Link href="/about" className={linkClass("/about")} onClick={onNavigate}>
-          About
+          {labels.about}
         </Link>
         <Link href="/careers" className={linkClass("/careers")} onClick={onNavigate}>
-          Careers
+          {labels.careers}
         </Link>
         <div className="pt-4">
           <Button href="/contact" className="w-full" onClick={onNavigate}>
-            Talk to BIL
+            {labels.contact}
           </Button>
         </div>
       </div>
