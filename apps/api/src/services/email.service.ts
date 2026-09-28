@@ -14,8 +14,6 @@ export type DeliveryResult =
  * Sends mail through Resend when CONTACT_EMAIL, CONTACT_FROM_EMAIL and
  * RESEND_API_KEY are set. Otherwise logs in development and reports that
  * delivery is not configured.
- *
- * TODO: confirm the production sender domain and inbox before launch.
  */
 export async function deliverEmail(message: OutboundEmail): Promise<DeliveryResult> {
   const apiKey = process.env.RESEND_API_KEY;

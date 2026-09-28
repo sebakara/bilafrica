@@ -1,32 +1,23 @@
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHero } from "@/components/sections/PageHero";
 import { Section } from "@/components/ui/Section";
-import { audiences } from "@/data/home";
-import { industries } from "@/data/industries";
-import { pageMetadata } from "@/lib/seo";
-
-export const metadata = pageMetadata({
-  title: "Industries",
-  description:
-    "BIL works with public institutions, financial services, enterprises, startups, universities and development organisations.",
-  path: "/industries",
-});
+import { useSite } from "@/components/site/SiteContent";
 
 export default function IndustriesPage() {
+  const { pages, industries, home } = useSite();
+  const page = pages.industries;
+
   return (
     <>
       <PageHero
-        eyebrow="Industries"
-        title="Problems first. Sectors second."
-        description="We work with organisations across the groups below. Nothing on this page is a claim of a current client, contract or partnership."
-        breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "Industries" },
-        ]}
+        eyebrow={page.eyebrow}
+        title={page.title}
+        description={page.description}
+        breadcrumbs={[...page.breadcrumbs]}
       />
       <Section>
         <div className="lg:grid lg:grid-cols-12 lg:gap-12">
-          <nav aria-label="Industries" className="mb-10 lg:col-span-3 lg:mb-0">
+          <nav aria-label={page.navLabel} className="mb-10 lg:col-span-3 lg:mb-0">
             <ul className="space-y-2 lg:sticky lg:top-28">
               {industries.map((industry) => (
                 <li key={industry.slug}>
@@ -44,7 +35,7 @@ export default function IndustriesPage() {
                 <p className="mt-3 max-w-2xl leading-relaxed text-muted">{industry.summary}</p>
                 <div className="mt-8 grid gap-8 sm:grid-cols-3">
                   <div>
-                    <h3 className="font-sans text-sm font-semibold">Challenges</h3>
+                    <h3 className="font-sans text-sm font-semibold">{page.challenges}</h3>
                     <ul className="mt-3 space-y-2 text-sm leading-relaxed text-muted">
                       {industry.challenges.map((item) => (
                         <li key={item}>{item}</li>
@@ -52,7 +43,7 @@ export default function IndustriesPage() {
                     </ul>
                   </div>
                   <div>
-                    <h3 className="font-sans text-sm font-semibold">How BIL helps</h3>
+                    <h3 className="font-sans text-sm font-semibold">{page.help}</h3>
                     <ul className="mt-3 space-y-2 text-sm leading-relaxed text-muted">
                       {industry.help.map((item) => (
                         <li key={item}>{item}</li>
@@ -60,7 +51,7 @@ export default function IndustriesPage() {
                     </ul>
                   </div>
                   <div>
-                    <h3 className="font-sans text-sm font-semibold">Relevant capabilities</h3>
+                    <h3 className="font-sans text-sm font-semibold">{page.capabilities}</h3>
                     <ul className="mt-3 space-y-2 text-sm leading-relaxed text-muted">
                       {industry.capabilities.map((item) => (
                         <li key={item}>{item}</li>
@@ -74,16 +65,16 @@ export default function IndustriesPage() {
         </div>
       </Section>
       <Section tone="mist">
-        <h2 className="text-2xl font-semibold">Organisations we are built to work with</h2>
+        <h2 className="text-2xl font-semibold">{page.audiencesTitle}</h2>
         <ul className="mt-6 flex flex-wrap gap-2">
-          {audiences.map((audience) => (
+          {home.audiences.map((audience) => (
             <li key={audience} className="border border-line bg-paper px-3 py-1.5 text-sm">
               {audience}
             </li>
           ))}
         </ul>
       </Section>
-      <CTASection primaryLabel="Discuss a sector problem" />
+      <CTASection primaryLabel={page.ctaLabel} />
     </>
   );
 }

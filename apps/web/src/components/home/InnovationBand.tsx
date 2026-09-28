@@ -1,15 +1,18 @@
 import { PracticeBand } from "@/components/home/PracticeBand";
-import { ecosystemPrograms } from "@/data/capabilities";
+import { useSite } from "@/components/site/SiteContent";
 
 export function InnovationBand() {
+  const { capabilities, chrome } = useSite();
+  const band = chrome.bands.innovation;
+
   return (
     <PracticeBand
-      eyebrow="Innovation"
-      title="Innovation grows through ecosystems."
-      description="BIL designs and operates programmes for organisations and partners. They are sponsored, commissioned or institutionally funded. They are not charitable activities of the company."
-      actionHref="/ecosystem"
-      actionLabel="Explore Innovation"
-      items={ecosystemPrograms.map((program) => program.title)}
+      eyebrow={band.eyebrow}
+      title={band.title}
+      description={band.description}
+      actionHref={band.actionHref}
+      actionLabel={band.actionLabel}
+      items={capabilities.ecosystemPrograms.map((program) => program.title)}
     />
   );
 }
