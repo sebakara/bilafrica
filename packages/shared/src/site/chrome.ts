@@ -1,0 +1,195 @@
+export const chrome = {
+  skip: "Skip to content",
+  loading: "Loading.",
+  routeLoading: "Loading",
+  breadcrumb: "Breadcrumb",
+  unavailable: "The site content could not be loaded.",
+  header: {
+    home: "Home",
+    work: "What We Do",
+    research: "Research & Labs",
+    industries: "Industries",
+    insights: "Insights",
+    about: "About",
+    careers: "Careers",
+    contact: "Talk to BIL",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
+    primaryNav: "Primary",
+    mobileNav: "Mobile",
+  },
+  footer: {
+    newsletterTitle: "Research updates",
+    newsletterText: "Register interest in future notes. Messages are sent only when there is something to share.",
+    columns: {
+      company: "Company",
+      capabilities: "Capabilities",
+      resources: "Resources",
+      legal: "Legal",
+    },
+    profilesTitle: "Profiles",
+    profilesText: "LinkedIn, X and GitHub profiles will be linked when they are published.",
+  },
+  hero: {
+    line: "Technology that moves ideas into reality.",
+    primaryLabel: "Explore What We Do",
+    primaryHref: "/services",
+    secondaryLabel: "Talk to BIL",
+    secondaryHref: "/contact",
+  },
+  cta: {
+    title: "Have a problem worth solving?",
+    description:
+      "Whether you are building a new digital platform, exploring emerging technology, conducting research, or developing an innovation program, BIL can help move the idea forward.",
+    primaryLabel: "Start a Conversation",
+    primaryHref: "/contact",
+  },
+  capabilityCta: "Discuss a Project",
+  notFound: {
+    code: "404",
+    title: "We could not find that page.",
+    description:
+      "The address may be mistyped, or the page has not been published. You can return home or start a conversation.",
+    home: "Back to home",
+    contact: "Contact BIL",
+  },
+  error: {
+    title: "This page could not be loaded.",
+    description: "Something went wrong while preparing this view. You can try again, or return home.",
+    retry: "Try again",
+    home: "Back to home",
+  },
+  bands: {
+    principles: {
+      eyebrow: "How the work fits together",
+      title: "Four practices. One company.",
+      description:
+        "Most firms specialise in engineering, research, advisory or ecosystem programmes. BIL is organised so these practices inform one another.",
+      closing:
+        "Research informs advisory. Advisory identifies problems worth solving. Engineering turns decisions into working systems. Innovation programmes create room for new partnerships and talent.",
+    },
+    capabilities: {
+      eyebrow: "What we do",
+      title: "Capabilities that reinforce each other.",
+      description:
+        "Commercial technology development sits at the centre. Research, advisory and ecosystem work make that delivery more precise.",
+      action: "Explore Our Capabilities",
+    },
+    technology: {
+      eyebrow: "Technology",
+      title: "We build beyond the buzzwords.",
+      description:
+        "BIL selects technology according to the problem, the institutions involved and the constraints of operating the result. A model, a ledger or a cloud platform is a means. It is not a starting point.",
+      actionLabel: "Explore Technology",
+      actionHref: "/services/technology",
+      footer: "We start with the problem, not the technology.",
+    },
+    labs: {
+      eyebrow: "BIL Labs",
+      title: "Where emerging technologies become practical systems.",
+      description:
+        "Labs is the applied research arm of the company. It studies a question, builds a prototype and decides what should become a product, a recommendation or a stopped experiment.",
+      action: "Explore BIL Labs",
+    },
+    advisory: {
+      eyebrow: "Advisory",
+      title: "Technology decisions backed by engineering and evidence.",
+      description:
+        "Advisory at BIL is informed by people who also design, build and research systems. A recommendation is checked against what can actually be engineered and operated.",
+      actionLabel: "Explore Advisory",
+      actionHref: "/services/advisory",
+    },
+    research: {
+      eyebrow: "Research & Policy",
+      title: "Research that informs technology decisions.",
+      description:
+        "Evidence-based technology and policy advisory. These are the formats BIL will publish. Released reports will be listed here. Sample writing lives in Insights.",
+      actionLabel: "Read Our Approach",
+      actionHref: "/services/research-policy",
+      footerLead: "Illustrative samples are marked as such in",
+      footerLink: "Insights",
+    },
+    innovation: {
+      eyebrow: "Innovation",
+      title: "Innovation grows through ecosystems.",
+      description:
+        "BIL designs and operates programmes for organisations and partners. They are sponsored, commissioned or institutionally funded. They are not charitable activities of the company.",
+      actionLabel: "Explore Innovation",
+      actionHref: "/ecosystem",
+    },
+    industries: {
+      eyebrow: "Industries",
+      title: "Work shaped by the problem in front of the institution.",
+      description:
+        "We work with organisations across government, finance, industry, research and the wider innovation community. The list below is a field of practice, not a client roster.",
+    },
+    africa: {
+      eyebrow: "Africa and the world",
+      title: "Building for Africa. Thinking globally.",
+      description:
+        "BIL is rooted in African markets, including Rwanda and the wider region, and is built for work that also has to meet international partners and standards. The opportunity is practical: institutions modernising services, firms building financial and data infrastructure, and research communities shaping how emerging technology is governed and deployed.",
+    },
+    insights: {
+      eyebrow: "Insights",
+      title: "Notes on technology, policy and practice.",
+      sampleDescription:
+        "Research, articles, perspectives and reports will be published here. Until then, the archive shows clearly marked samples of the format.",
+      publishedDescription: "Research, articles, perspectives and reports.",
+      action: "View Insights",
+      error: "Insights could not be loaded from the database.",
+    },
+  },
+  insights: {
+    eyebrow: "Insights",
+    title: "Research, perspectives and notes.",
+    categoriesLabel: "Insight categories",
+    kindLabels: {
+      "research-report": "Research report",
+      article: "Article",
+      perspective: "Perspective",
+      "policy-brief": "Policy brief",
+      "case-study": "Case study",
+      "technology-note": "Technology note",
+    },
+    sampleBadge: "Sample",
+    illustrativeBadge: "Illustrative sample",
+    readSample: "Read sample",
+    read: "Read",
+    notPublication: "Not a BIL publication",
+    loading: "Loading insight.",
+    sampleNotice: "Illustrative sample. This page is not a published BIL report, and it should not be cited as one.",
+    attachmentNote: "PDF attachments will be added when a real publication is released.",
+    related: "Related samples",
+    archiveSample:
+      "This archive will hold research reports, articles, perspectives, policy briefs, case studies and technology notes. Everything currently listed is sample content used to show the format.",
+    archivePublished: "Research reports, articles, perspectives, policy briefs, case studies and technology notes.",
+    sampleBanner: "Sample content. These pieces are not BIL publications, and they do not report company research findings.",
+    loadError: "Insights could not be loaded from the database.",
+    loadingList: "Loading insights.",
+    emptyCategory: "Nothing is listed in this category yet.",
+    caseStudiesTitle: "Case studies",
+    caseStudiesText:
+      "Case studies are published only when an organisation has agreed to be named. None are listed yet. Example engagements are kept unpublished.",
+  },
+  forms: {
+    website: "Website",
+    fullName: "Full name",
+    organisation: "Organisation",
+    email: "Email",
+    phone: "Phone",
+    country: "Country",
+    interest: "Area of interest",
+    selectInterest: "Select an area",
+    message: "Message",
+    optional: "(optional)",
+    privacyLead: "We use this information only to respond to your enquiry. Read the",
+    privacyLink: "privacy notice",
+    submit: "Start a Conversation",
+    sending: "Sending",
+    contactError: "We could not send your message. Please try again in a few minutes.",
+    newsletterEmail: "Email address",
+    newsletterPlaceholder: "Work email",
+    newsletterSubmit: "Register interest",
+    newsletterError: "Too many attempts. Please wait a few minutes and try again.",
+  },
+} as const;

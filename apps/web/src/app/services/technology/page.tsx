@@ -3,53 +3,41 @@ import { CapabilityLayout } from "@/components/services/CapabilityLayout";
 import { OfferingGroups } from "@/components/services/OfferingGroups";
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
-import { technologyGroups } from "@/data/capabilities";
-import { technologyAreas } from "@/data/home";
-import { pageMetadata } from "@/lib/seo";
-
-export const metadata = pageMetadata({
-  title: "Technology",
-  description:
-    "BIL designs and builds digital systems, platforms and infrastructure around operational problems rather than technology trends.",
-  path: "/services/technology",
-});
-
-const crumbs = [
-  { label: "Home", href: "/" },
-  { label: "What we do", href: "/services" },
-  { label: "Technology" },
-];
+import { useSite } from "@/components/site/SiteContent";
 
 export default function TechnologyPage() {
+  const { pages, capabilities, home } = useSite();
+  const page = pages.technology;
+
   return (
     <CapabilityLayout
       tone="dark"
-      eyebrow="BIL Technologies"
-      title="Digital systems built around the problem."
-      description="BIL Technologies designs and builds software, platforms and infrastructure. Artificial intelligence, data and blockchain sit inside that practice. They are chosen when they solve something a simpler system cannot."
-      breadcrumbs={crumbs}
+      eyebrow={page.eyebrow}
+      title={page.title}
+      description={page.description}
+      breadcrumbs={[...page.breadcrumbs]}
       actions={
         <Button href="/contact" variant="dark" size="lg">
-          Discuss a Project
+          {page.action}
         </Button>
       }
     >
       <Section>
         <p className="max-w-3xl text-lg leading-relaxed text-muted">
-          Work covers custom software, enterprise platforms, financial and public digital systems, and the cloud and delivery practices that keep them running. Cybersecurity is part of the same engineering conversation.{" "}
+          {page.intro}{" "}
           <Link href="/services/cybersecurity" className="font-medium text-brand">
-            See the cybersecurity capability
+            {page.cyberLink}
           </Link>
           .
         </p>
         <div className="mt-14">
-          <OfferingGroups groups={technologyGroups} />
+          <OfferingGroups groups={[...capabilities.technologyGroups]} />
         </div>
       </Section>
       <Section tone="mist">
-        <h2 className="text-3xl font-semibold tracking-tight">Technology areas</h2>
+        <h2 className="text-3xl font-semibold tracking-tight">{page.areasTitle}</h2>
         <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {technologyAreas.map((area) => (
+          {home.technologyAreas.map((area) => (
             <li key={area.title} className="border border-line bg-paper p-5">
               <h3 className="font-sans text-base font-semibold text-ink">{area.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{area.description}</p>

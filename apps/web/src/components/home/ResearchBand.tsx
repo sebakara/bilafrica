@@ -1,21 +1,24 @@
 import Link from "@/components/ui/AppLink";
 import { PracticeBand } from "@/components/home/PracticeBand";
-import { researchFormats } from "@/data/home";
+import { useSite } from "@/components/site/SiteContent";
 
 export function ResearchBand() {
+  const { home, chrome } = useSite();
+  const band = chrome.bands.research;
+
   return (
     <PracticeBand
-      eyebrow="Research & Policy"
-      title="Research that informs technology decisions."
-      description="Evidence-based technology and policy advisory. These are the formats BIL will publish. Released reports will be listed here. Sample writing lives in Insights."
-      actionHref="/services/research-policy"
-      actionLabel="Read Our Approach"
-      items={researchFormats}
+      eyebrow={band.eyebrow}
+      title={band.title}
+      description={band.description}
+      actionHref={band.actionHref}
+      actionLabel={band.actionLabel}
+      items={home.researchFormats}
       footer={
         <>
-          Illustrative samples are marked as such in{" "}
+          {band.footerLead}{" "}
           <Link href="/insights" className="font-semibold text-brand">
-            Insights
+            {band.footerLink}
           </Link>
           .
         </>

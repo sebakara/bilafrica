@@ -2,36 +2,27 @@ import { CapabilityLayout } from "@/components/services/CapabilityLayout";
 import { OfferingGroups } from "@/components/services/OfferingGroups";
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
-import { cybersecurityOfferings } from "@/data/capabilities";
-import { pageMetadata } from "@/lib/seo";
-
-export const metadata = pageMetadata({
-  title: "Cybersecurity",
-  description:
-    "Cybersecurity at BIL is a capability within engineering and advisory, covering architecture, assurance and technical risk.",
-  path: "/services/cybersecurity",
-});
+import { useSite } from "@/components/site/SiteContent";
 
 export default function CybersecurityPage() {
+  const { pages, capabilities } = useSite();
+  const page = pages.cybersecurity;
+
   return (
     <CapabilityLayout
-      eyebrow="Cybersecurity & technology assurance"
-      title="Security as part of how systems are designed."
-      description="This is a capability inside BIL, not a separate division. It supports builds, architecture reviews and technical due diligence."
-      breadcrumbs={[
-        { label: "Home", href: "/" },
-        { label: "What we do", href: "/services" },
-        { label: "Cybersecurity" },
-      ]}
+      eyebrow={page.eyebrow}
+      title={page.title}
+      description={page.description}
+      breadcrumbs={[...page.breadcrumbs]}
       actions={
         <Button href="/contact" size="lg">
-          Request an assessment
+          {page.action}
         </Button>
       }
-      ctaLabel="Discuss a security review"
+      ctaLabel={page.ctaLabel}
     >
       <Section>
-        <OfferingGroups groups={cybersecurityOfferings} />
+        <OfferingGroups groups={[...capabilities.cybersecurityOfferings]} />
       </Section>
     </CapabilityLayout>
   );

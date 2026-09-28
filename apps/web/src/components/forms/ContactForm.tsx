@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { ContactField } from "@/lib/contact-schema";
-import { interestAreas } from "@/lib/contact-schema";
 import { Button } from "@/components/ui/Button";
+import { useSite } from "@/components/site/SiteContent";
 import { cn } from "@/lib/utils";
 
 type ContactState = {
@@ -21,18 +21,20 @@ function Field({
   error,
   children,
   optional = false,
+  optionalLabel,
 }: {
   id: string;
   label: string;
   error?: string;
   children: React.ReactNode;
   optional?: boolean;
+  optionalLabel: string;
 }) {
   return (
     <div>
       <label htmlFor={id} className="mb-2 block text-sm font-medium text-body">
         {label}
-        {optional ? <span className="font-normal text-muted"> (optional)</span> : null}
+        {optional ? <span className="font-normal text-muted"> {optionalLabel}</span> : null}
       </label>
       {children}
       {error ? (
@@ -45,6 +47,8 @@ function Field({
 }
 
 export function ContactForm() {
+  const { chrome, catalog } = useSite();
+  const labels = chrome.forms;
   const [state, setState] = useState<ContactState>(initialState);
   const [pending, setPending] = useState(false);
   const errors = state.fieldErrors;
@@ -63,7 +67,7 @@ export function ContactForm() {
       const body = (await response.json()) as ContactState;
       setState(body);
     } catch {
-      setState({ status: "error", message: "We could not send your message. Please try again in a few minutes." });
+      setState({ status: "error", message: labels.contactError });
     } finally {
       setPending(false);
     }
@@ -72,7 +76,7 @@ export function ContactForm() {
   return (
     <form onSubmit={onSubmit} className="space-y-5" noValidate>
       <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
-        <label htmlFor="website">Website</label>
+        <label htmlFor="website">{labels.website}</label>
         <input id="website" name="website" tabIndex={-1} autoComplete="off" />
       </div>
 
@@ -89,7 +93,7 @@ export function ContactForm() {
       ) : null}
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field id="fullName" label="Full name" error={errors?.fullName}>
+        <Field id="fullName" label={labels.fullName} optionalLabel={labels.optional} error={errors?.fullName}>
           <input
             id="fullName"
             name="fullName"
@@ -99,7 +103,7 @@ export function ContactForm() {
             aria-describedby={errors?.fullName ? "fullName-error" : undefined}
           />
         </Field>
-        <Field id="organisation" label="Organisation" error={errors?.organisation}>
+        <Field id="organisation" label={labels.organisation} optionalLabel={labels.optional} error={errors?.organisation}>
           <input
             id="organisation"
             name="organisation"
@@ -109,7 +113,7 @@ export function ContactForm() {
             aria-describedby={errors?.organisation ? "organisation-error" : undefined}
           />
         </Field>
-        <Field id="email" label="Email" error={errors?.email}>
+        <Field id="email" label={labels.email} optionalLabel={labels.optional} error={errors?.email}>
           <input
             id="email"
             name="email"
@@ -120,7 +124,7 @@ export function ContactForm() {
             aria-describedby={errors?.email ? "email-error" : undefined}
           />
         </Field>
-        <Field id="phone" label="Phone" optional error={errors?.phone}>
+        <Field id="phone" label={labels.phone} optional optionalLabel={labels.optional} error={errors?.phone}>
           <input
             id="phone"
             name="phone"
@@ -131,7 +135,7 @@ export function ContactForm() {
             aria-describedby={errors?.phone ? "phone-error" : undefined}
           />
         </Field>
-        <Field id="country" label="Country" optional error={errors?.country}>
+        <Field id="country" label={labels.country} optional optionalLabel={labels.optional} error={errors?.country}>
           <input
             id="country"
             name="country"
@@ -141,7 +145,7 @@ export function ContactForm() {
             aria-describedby={errors?.country ? "country-error" : undefined}
           />
         </Field>
-        <Field id="interest" label="Area of interest" error={errors?.interest}>
+        <Field id="interest" label={labels.interest} optionalLabel={labels.optional} error={errors?.interest}>
           <select
             id="interest"
             name="interest"
@@ -151,9 +155,9 @@ export function ContactForm() {
             aria-describedby={errors?.interest ? "interest-error" : undefined}
           >
             <option value="" disabled>
-              Select an area
+              {labels.selectInterest}
             </option>
-            {interestAreas.map((area) => (
+            {catalog.interestAreas.map((area) => (
               <option key={area} value={area}>
                 {area}
               </option>
@@ -161,7 +165,7 @@ export function ContactForm() {
           </select>
         </Field>
       </div>
-      <Field id="message" label="Message" error={errors?.message}>
+      <Field id="message" label={labels.message} optionalLabel={labels.optional} error={errors?.message}>
         <textarea
           id="message"
           name="message"
@@ -172,14 +176,14 @@ export function ContactForm() {
         />
       </Field>
       <p className="text-sm text-muted">
-        We use this information only to respond to your enquiry. Read the{" "}
+        {labels.privacyLead}{" "}
         <a href="/privacy" className="font-medium text-brand">
-          privacy notice
+          {labels.privacyLink}
         </a>
         .
       </p>
       <Button type="submit" loading={pending}>
-        {pending ? "Sending" : "Start a Conversation"}
+        {pending ? labels.sending : labels.submit}
       </Button>
     </form>
   );

@@ -20,6 +20,7 @@ type LogoProps = {
   className?: string;
   linked?: boolean;
   priority?: boolean;
+  name?: string;
 };
 
 export function Logo({
@@ -28,12 +29,13 @@ export function Logo({
   className,
   linked = true,
   priority = false,
+  name = "Blockchain & Innovation Landscape",
 }: LogoProps) {
   const asset = assets[variant][theme];
   const image = (
     <Image
       src={asset.src}
-      alt={linked ? "" : "Blockchain & Innovation Landscape"}
+      alt={linked ? "" : name}
       width={asset.width}
       height={asset.height}
       priority={priority}
@@ -47,7 +49,7 @@ export function Logo({
   }
 
   return (
-    <Link href="/" aria-label="Blockchain & Innovation Landscape home" className="inline-flex rounded-sm">
+    <Link href="/" aria-label={`${name} home`} className="inline-flex rounded-sm">
       {image}
     </Link>
   );

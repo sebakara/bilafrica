@@ -1,6 +1,3 @@
-import { database } from "@/lib/db";
+import { HealthController } from "@/controllers/health.controller";
 
-export async function GET() {
-  await database();
-  return Response.json({ ok: true });
-}
+export const GET = HealthController.show;

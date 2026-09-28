@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { useSite } from "@/components/site/SiteContent";
 
 type NewsletterState = {
   status: "idle" | "success" | "error";
@@ -9,6 +10,8 @@ type NewsletterState = {
 const initialState: NewsletterState = { status: "idle" };
 
 export function NewsletterForm() {
+  const { chrome } = useSite();
+  const labels = chrome.forms;
   const [state, setState] = useState<NewsletterState>(initialState);
   const [pending, setPending] = useState(false);
 
@@ -25,7 +28,7 @@ export function NewsletterForm() {
       });
       setState((await response.json()) as NewsletterState);
     } catch {
-      setState({ status: "error", message: "Too many attempts. Please wait a few minutes and try again." });
+      setState({ status: "error", message: labels.newsletterError });
     } finally {
       setPending(false);
     }
@@ -38,7 +41,7 @@ export function NewsletterForm() {
         <input id="newsletter-website" name="website" tabIndex={-1} autoComplete="off" />
       </div>
       <label htmlFor="newsletter-email" className="sr-only">
-        Email address
+        {labels.newsletterEmail}
       </label>
       <div className="flex flex-col gap-2 sm:flex-row">
         <input
@@ -46,13 +49,13 @@ export function NewsletterForm() {
           name="email"
           type="email"
           autoComplete="email"
-          placeholder="Work email"
+          placeholder={labels.newsletterPlaceholder}
           aria-invalid={state.status === "error" || undefined}
           aria-describedby={state.message ? "newsletter-status" : undefined}
           className="h-11 w-full border border-white/15 bg-white/5 px-3 text-sm text-paper placeholder:text-haze"
         />
         <Button type="submit" variant="dark" loading={pending}>
-          Register interest
+          {labels.newsletterSubmit}
         </Button>
       </div>
       {state.message ? (
