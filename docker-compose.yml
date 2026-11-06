@@ -4,16 +4,19 @@ services:
   mysql:
     image: mysql:8.4
     environment:
-      MYSQL_DATABASE: bil
-      MYSQL_USER: bil
-      MYSQL_PASSWORD: bil
-      MYSQL_ROOT_PASSWORD: bil-root
+      # Read from the root .env. MySQL applies these only when the bil-mysql
+      # volume is first created.
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-bil}
+      MYSQL_USER: ${MYSQL_USER:-bil}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-bil}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-bil-root}
     ports:
-      - "3307:3306"
+      # Local development only: reachable from this machine, not the network.
+      - "127.0.0.1:3307:3306"
     volumes:
       - bil-mysql:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-ubil", "-pbil"]
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u\"$$MYSQL_USER\" -p\"$$MYSQL_PASSWORD\""]
       interval: 5s
       timeout: 5s
       retries: 20
@@ -34,7 +37,6 @@ services:
       CONTACT_EMAIL: ${CONTACT_EMAIL:-}
       CONTACT_FROM_EMAIL: ${CONTACT_FROM_EMAIL:-}
       RESEND_API_KEY: ${RESEND_API_KEY:-}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
       ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:-}
     extra_hosts:
       - "host.docker.internal:host-gateway"

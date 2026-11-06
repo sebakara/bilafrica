@@ -6,7 +6,8 @@
     "dev": "next dev --port 3001",
     "build": "next build",
     "start": "next start --port 3001",
-    "db:migrate": "knex migrate:latest --knexfile knexfile.cjs"
+    "db:migrate": "knex migrate:latest --knexfile knexfile.cjs",
+    "admin": "node scripts/admin.cjs"
   },
   "dependencies": {
     "@bil/shared": "workspace:*",

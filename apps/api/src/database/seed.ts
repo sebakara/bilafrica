@@ -1,11 +1,5 @@
 import { insights as seedInsights, siteDocument } from "@bil/shared";
 import type { Knex } from "knex";
-import { hashPassword } from "@/services/password.service";
-
-export const seededAdmin = {
-  email: "admin@bil.local",
-  password: "bil-admin",
-};
 
 export async function seedInsightsIfEmpty(database: Knex) {
   const row = await database("insights").count<{ total: number }>({ total: "*" }).first();
@@ -36,14 +30,4 @@ export async function seedSiteContent(database: Knex) {
   if (existing) return;
 
   await database("site_documents").insert({ key: "public", body: JSON.stringify(siteDocument) });
-}
-
-export async function seedAdminIfEmpty(database: Knex) {
-  const row = await database("admins").count<{ total: number }>({ total: "*" }).first();
-  if (Number(row?.total ?? 0) > 0) return;
-
-  await database("admins").insert({
-    email: seededAdmin.email,
-    password_hash: hashPassword(seededAdmin.password),
-  });
 }

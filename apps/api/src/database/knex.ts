@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import knex, { type Knex } from "knex";
-import { seedAdminIfEmpty, seedInsightsIfEmpty, seedSiteContent } from "@/database/seed";
+import { seedInsightsIfEmpty, seedSiteContent } from "@/database/seed";
 
 loadRootEnv();
 
@@ -62,7 +62,6 @@ export function db() {
     ready = database.migrate
       .latest()
       .then(() => seedInsightsIfEmpty(database))
-      .then(() => seedAdminIfEmpty(database))
       .then(() => seedSiteContent(database))
       .then(() => database);
   }
