@@ -32,7 +32,7 @@ Copy the environment example and fill in values when email delivery is ready:
 cp .env.example .env
 ```
 
-The API connects to the MySQL named by `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD`, and `MYSQL_DATABASE` in `.env`. Without a MySQL of your own, `docker compose --profile local-db up -d mysql` starts one on host port 3307.
+MySQL must be running before the API starts. `docker compose up mysql -d` starts the database on host port 3307. In Docker, the API always connects to that `mysql` service; `MYSQL_USER` (not `root`), `MYSQL_PASSWORD`, `MYSQL_ROOT_PASSWORD`, and `MYSQL_DATABASE` in `.env` set its credentials.
 
 ## Development
 

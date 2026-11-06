@@ -1,14 +1,12 @@
 name: bil
 
 services:
-  # Optional local database. The API uses whatever MySQL the .env names, so this
-  # only starts when asked for: docker compose --profile local-db up -d mysql
   mysql:
     image: mysql:8.4
-    profiles: ["local-db"]
     environment:
       # Read from the root .env. MySQL applies these only when the bil-mysql
-      # volume is first created.
+      # volume is first created. MYSQL_USER must not be root: root's password
+      # is MYSQL_ROOT_PASSWORD.
       MYSQL_DATABASE: ${MYSQL_DATABASE:-bil}
       MYSQL_USER: ${MYSQL_USER:-bil}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-bil}
@@ -32,10 +30,10 @@ services:
       NODE_ENV: production
       PORT: 3001
       HOSTNAME: 0.0.0.0
-      # Database credentials come from the root .env. 127.0.0.1 or localhost
-      # means the MySQL running on the host, reached via host.docker.internal.
-      MYSQL_HOST: ${MYSQL_HOST:-127.0.0.1}
-      MYSQL_PORT: ${MYSQL_PORT:-3306}
+      # Always the mysql service above, over Docker's own network. Only the
+      # user, password, and database name come from the root .env.
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
       MYSQL_USER: ${MYSQL_USER:-bil}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-bil}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-bil}
@@ -45,6 +43,9 @@ services:
       ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:-}
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    depends_on:
+      mysql:
+        condition: service_healthy
     restart: unless-stopped
 
   web:
