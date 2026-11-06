@@ -10,7 +10,6 @@ export default function AdvisoryPage() {
 
   return (
     <CapabilityLayout
-      tone="dark"
       eyebrow={page.eyebrow}
       title={page.title}
       description={page.description}

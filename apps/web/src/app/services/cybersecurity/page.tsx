@@ -15,7 +15,7 @@ export default function CybersecurityPage() {
       description={page.description}
       breadcrumbs={[...page.breadcrumbs]}
       actions={
-        <Button href="/contact" size="lg">
+        <Button href="/contact" variant="dark" size="lg">
           {page.action}
         </Button>
       }

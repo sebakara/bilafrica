@@ -2,6 +2,7 @@ import Link from "@/components/ui/AppLink";
 import { ArrowRight } from "lucide-react";
 import { CTASection } from "@/components/sections/CTASection";
 import { PageHero } from "@/components/sections/PageHero";
+import { DetailBand } from "@/components/services/DetailBand";
 import { Section } from "@/components/ui/Section";
 import { useSite } from "@/components/site/SiteContent";
 
@@ -12,6 +13,7 @@ export default function ServicesPage() {
   return (
     <>
       <PageHero
+        tone="dark"
         eyebrow={page.eyebrow}
         title={page.title}
         description={page.description}
@@ -41,20 +43,17 @@ export default function ServicesPage() {
           ))}
         </div>
       </Section>
-      <Section tone="mist">
-        <p className="eyebrow text-brand">{page.engagementsEyebrow}</p>
-        <h2 className="mt-3 text-3xl font-semibold tracking-tight">{page.engagementsTitle}</h2>
-        <p className="mt-4 max-w-2xl leading-relaxed text-muted">{page.engagements}</p>
-        <dl className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {home.engagementModels.map((model) => (
-            <div key={model.title} className="border border-line bg-paper p-5">
-              <dt className="font-sans text-base font-semibold text-ink">{model.title}</dt>
-              <dd className="mt-2 text-sm leading-relaxed text-muted">{model.description}</dd>
-            </div>
-          ))}
-        </dl>
-        <p className="mt-8 max-w-2xl border border-line bg-paper px-5 py-4 text-sm leading-relaxed text-muted">{page.ventures}</p>
-      </Section>
+      <DetailBand
+        groups={[
+          {
+            eyebrow: page.engagementsEyebrow,
+            title: page.engagementsTitle,
+            description: page.engagements,
+            items: [...home.engagementModels],
+            note: page.ventures,
+          },
+        ]}
+      />
       <CTASection
         primaryLabel={page.cta.primaryLabel}
         secondaryHref={page.cta.secondaryHref}

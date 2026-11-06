@@ -1,5 +1,6 @@
 import { ResearchCard } from "@/components/ui/InsightCard";
 import { CapabilityLayout } from "@/components/services/CapabilityLayout";
+import { DetailBand } from "@/components/services/DetailBand";
 import { OfferingGroups } from "@/components/services/OfferingGroups";
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
@@ -14,7 +15,6 @@ export default function ResearchPolicyPage() {
 
   return (
     <CapabilityLayout
-      tone="dark"
       eyebrow={page.eyebrow}
       title={page.title}
       description={page.description}
@@ -32,17 +32,21 @@ export default function ResearchPolicyPage() {
           <OfferingGroups groups={[...capabilities.researchGroups]} />
         </div>
       </Section>
-      <Section tone="mist">
-        <h2 className="text-3xl font-semibold tracking-tight">{page.featuredTitle}</h2>
-        <p className="mt-4 max-w-2xl leading-relaxed text-muted">
-          {onlySamples ? page.featuredSample : page.featuredPublished}
-        </p>
-        <div className="mt-10 grid gap-4 lg:grid-cols-3">
-          {samples?.map((insight) => (
-            <ResearchCard key={insight.id} insight={insight} />
-          ))}
-        </div>
-      </Section>
+      <DetailBand
+        groups={[
+          {
+            title: page.featuredTitle,
+            description: onlySamples ? page.featuredSample : page.featuredPublished,
+            children: (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {samples?.map((insight) => (
+                  <ResearchCard key={insight.id} insight={insight} />
+                ))}
+              </div>
+            ),
+          },
+        ]}
+      />
     </CapabilityLayout>
   );
 }

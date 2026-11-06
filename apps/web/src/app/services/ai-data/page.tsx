@@ -1,4 +1,5 @@
 import { CapabilityLayout } from "@/components/services/CapabilityLayout";
+import { DetailBand } from "@/components/services/DetailBand";
 import { OfferingGroups } from "@/components/services/OfferingGroups";
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
@@ -15,7 +16,7 @@ export default function AiDataPage() {
       description={page.description}
       breadcrumbs={[...page.breadcrumbs]}
       actions={
-        <Button href="/contact" size="lg">
+        <Button href="/contact" variant="dark" size="lg">
           {page.action}
         </Button>
       }
@@ -24,19 +25,16 @@ export default function AiDataPage() {
       <Section>
         <OfferingGroups groups={[...capabilities.aiGroups]} />
       </Section>
-      <Section tone="mist">
-        <p className="eyebrow text-brand">{page.deliveryEyebrow}</p>
-        <h2 className="mt-3 text-3xl font-semibold tracking-tight">{page.responsibleTitle}</h2>
-        <p className="mt-4 max-w-2xl leading-relaxed text-muted">{page.responsible}</p>
-        <ul className="mt-10 grid gap-4 sm:grid-cols-2">
-          {capabilities.responsibleAi.map((item) => (
-            <li key={item.title} className="border border-line bg-paper p-5">
-              <h3 className="font-sans text-base font-semibold text-ink">{item.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{item.description}</p>
-            </li>
-          ))}
-        </ul>
-      </Section>
+      <DetailBand
+        groups={[
+          {
+            eyebrow: page.deliveryEyebrow,
+            title: page.responsibleTitle,
+            description: page.responsible,
+            items: [...capabilities.responsibleAi],
+          },
+        ]}
+      />
     </CapabilityLayout>
   );
 }

@@ -19,7 +19,7 @@ export function CapabilityLayout({
   eyebrow,
   title,
   description,
-  tone = "light",
+  tone = "dark",
   breadcrumbs,
   actions,
   ctaTitle,

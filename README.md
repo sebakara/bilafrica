@@ -103,7 +103,7 @@ Insights live in `src/content/insights.ts` and match the `Insight` type. Every c
 
 `docker compose up --build` starts MySQL, the Next.js API, and the React site.
 
-`VITE_SITE_URL` is read when the frontend image is built. Mail settings are read when the API container starts.
+`VITE_SITE_URL` is read when the frontend image is built. The API reads `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD`, and `MYSQL_DATABASE` from the root `.env`. Inside Docker, `127.0.0.1` and `localhost` mean the machine running Docker. Mail settings are read when the API container starts.
 
 ```bash
 docker compose up --build
