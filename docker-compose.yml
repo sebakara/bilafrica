@@ -4,20 +4,31 @@ services:
   mysql:
     image: mysql:8.4
     environment:
-      # Read from the root .env. MySQL applies these only when the bil-mysql
-      # volume is first created. MYSQL_USER must not be root: root's password
-      # is MYSQL_ROOT_PASSWORD.
+      # The same credentials the API uses, from the root .env. MySQL applies
+      # them only when the bil-mysql volume is first created.
       MYSQL_DATABASE: ${MYSQL_DATABASE:-bil}
-      MYSQL_USER: ${MYSQL_USER:-bil}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-bil}
+      BIL_DB_USER: ${MYSQL_USER:-bil}
+      BIL_DB_PASSWORD: ${MYSQL_PASSWORD:-bil}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-bil-root}
+    # The mysql image refuses MYSQL_USER=root, so when the .env user is root,
+    # give root the .env password instead of creating a second user.
+    entrypoint:
+      - sh
+      - -c
+      - |
+        if [ "$$BIL_DB_USER" = "root" ]; then
+          export MYSQL_ROOT_PASSWORD="$$BIL_DB_PASSWORD"
+        else
+          export MYSQL_USER="$$BIL_DB_USER" MYSQL_PASSWORD="$$BIL_DB_PASSWORD"
+        fi
+        exec docker-entrypoint.sh mysqld
     ports:
       # Local development only: reachable from this machine, not the network.
       - "127.0.0.1:3307:3306"
     volumes:
       - bil-mysql:/var/lib/mysql
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u\"$$MYSQL_USER\" -p\"$$MYSQL_PASSWORD\""]
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u\"$$BIL_DB_USER\" -p\"$$BIL_DB_PASSWORD\""]
       interval: 5s
       timeout: 5s
       retries: 20
