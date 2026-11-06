@@ -12,7 +12,7 @@
     "@bil/shared": "workspace:*",
     "knex": "^3.3.0",
     "mysql2": "^3.15.3",
-    "next": "16.3.6",
+    "next": "16.4.5",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },
