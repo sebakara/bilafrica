@@ -20,6 +20,14 @@ jobs:
     if: ${{ needs.audit.result == 'success' }}
     runs-on: ubuntu-latest
 
+    env:
+      # The host comes from the SERVER_HOST secret. User and port default to
+      # root and 22; override them with the SERVER_USER / SERVER_PORT variables.
+      SERVER_HOST: ${{ secrets.SERVER_HOST }}
+      SERVER_USER: ${{ vars.SERVER_USER || 'root' }}
+      SERVER_PORT: ${{ vars.SERVER_PORT || '22' }}
+      DEPLOY_PATH: /var/www/bil
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,26 +54,33 @@ jobs:
 
       - name: Configure SSH
         run: |
-          mkdir -p ~/.ssh
+          if [ -z "$SERVER_HOST" ]; then
+            echo "ERROR: SERVER_HOST secret is not set in GitHub repository secrets."
+            exit 1
+          fi
           if [ -z "$SSH_KEY" ]; then
             echo "ERROR: SSH_PRIVATE_KEY_PROD secret is not set in GitHub repository secrets."
             exit 1
           fi
+          mkdir -p ~/.ssh
           echo "$SSH_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          printf 'Host 109.199.96.234\n  User root\n  Port 22\n  StrictHostKeyChecking no\n  UserKnownHostsFile /dev/null\n  IdentityFile ~/.ssh/id_rsa\n' > ~/.ssh/config
+          # Every later step reaches the server through the "prod" alias.
+          printf 'Host prod\n  HostName %s\n  User %s\n  Port %s\n  StrictHostKeyChecking no\n  UserKnownHostsFile /dev/null\n  IdentityFile ~/.ssh/id_rsa\n  ConnectTimeout 15\n' \
+            "$SERVER_HOST" "$SERVER_USER" "$SERVER_PORT" > ~/.ssh/config
           chmod 600 ~/.ssh/config
         env:
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY_PROD }}
 
       - name: Verify server prerequisites
         run: |
-          ssh root@109.199.96.234 '
+          ssh prod "
             set -e
-            mkdir -p /var/www/bil
-            test -w /var/www/bil
+            mkdir -p $DEPLOY_PATH
+            test -w $DEPLOY_PATH
             command -v docker >/dev/null
-          '
+            docker compose version >/dev/null
+          "
 
       - name: Sync app to server
         run: |
@@ -80,13 +95,13 @@ jobs:
             --exclude='apps/web/.env.*' \
             --exclude='apps/api/.next' \
             --exclude='apps/web/dist' \
-            ./ root@109.199.96.234:/var/www/bil/
+            ./ "prod:$DEPLOY_PATH/"
 
       - name: Restart services
         run: |
-          ssh root@109.199.96.234 '
+          ssh prod "
             set -e
-            cd /var/www/bil
+            cd $DEPLOY_PATH
             docker compose up -d --build
-            echo "Deploy complete"
-          '
+            echo 'Deploy complete'
+          "
