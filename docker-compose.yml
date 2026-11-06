@@ -52,7 +52,8 @@ services:
       args:
         VITE_SITE_URL: ${VITE_SITE_URL:-http://localhost:3000}
     ports:
-      - "${PORT:-3000}:80"
+      # Only Apache on the same machine reaches the site; set PORT in .env to change it.
+      - "127.0.0.1:${PORT:-3200}:80"
     depends_on:
       - api
     restart: unless-stopped

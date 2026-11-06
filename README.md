@@ -109,7 +109,7 @@ Insights live in `src/content/insights.ts` and match the `Insight` type. Every c
 docker compose up --build
 ```
 
-The site is published on port 3000. Copy `.env.example` to `.env` before building when the public origin or mail delivery should change.
+The site is published on `127.0.0.1:3200` (set `PORT` in `.env` to change it), so only a reverse proxy on the same machine, such as Apache, can reach it. Copy `.env.example` to `.env` before building when the public origin or mail delivery should change.
 
 ```bash
 docker compose build --no-cache
